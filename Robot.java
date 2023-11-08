@@ -9,7 +9,17 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.revrobotics.*;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This sample program shows how to control a motor using a joystick. In the operator control part
@@ -22,18 +32,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * to the Dashboard.
  */
 public class Robot extends TimedRobot {
-  private static final int kMotorPort = 0;
+
   private static final int kJoystickPort = 0;
   private static final int kEncoderPortA = 0;
   private static final int kEncoderPortB = 1;
 
-  private MotorController m_motor;
+  private CANSparkMax m_motor1;
   private Joystick m_joystick;
   private Encoder m_encoder;
 
   @Override
   public void robotInit() {
-    m_motor = new PWMSparkMax(kMotorPort);
+    m_motor1 = new CANSparkMax(6, MotorType.kBrushless);
     m_joystick = new Joystick(kJoystickPort);
     m_encoder = new Encoder(kEncoderPortA, kEncoderPortB);
     // Use SetDistancePerPulse to set the multiplier for GetDistance
@@ -47,11 +57,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("Encoder", m_encoder.getDistance());
+
+    // SmartDashboard.putNumber("Encoder", m_encoder.getDistance());
   }
 
   @Override
   public void teleopPeriodic() {
-    m_motor.set(m_joystick.getY());
+  
+    
   }
 }
